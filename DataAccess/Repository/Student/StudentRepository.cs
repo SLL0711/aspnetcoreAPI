@@ -26,7 +26,12 @@ namespace DataAccess.Repository.Student
             throw new NotImplementedException();
         }
 
-        public async Task<IQueryable<Students>> RetrieveAll()
+        public Task DeleteById(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<Students> RetrieveAll()
         {
             var query = _context.Students.Where(t => true);
             return query;

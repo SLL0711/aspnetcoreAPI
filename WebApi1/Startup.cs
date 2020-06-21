@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using Autofac;
@@ -23,6 +24,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Service.Models.CommonModel;
 using WebApi1.Extension.ExtensionModel;
 using WebApi1.Extension.ExtensionModel.ConfigOptions;
 using WebApi1.Extension.Middleware.ErrorHandler;
@@ -79,10 +81,15 @@ namespace WebApi1
                 };
             });
 
-            services.AddDbContext<SchoolContext>(options =>
-                {
-                    options.UseSqlServer(config.GetConnectionString("DefaultConnection"));
-                });
+            //services.AddDbContext<SchoolContext>(options =>
+            //    {
+            //        options.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+            //    });
+
+            services.AddDbContext<PetshopContext>(options =>
+            {
+                options.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+            });
 
             //使用Autofac替代net core 默认DI
             var builder = new ContainerBuilder();
@@ -120,20 +127,6 @@ namespace WebApi1
 
             //app.UseStaticFiles(); // For the wwwroot folder
 
-            //var cachePeriod = env.IsDevelopment() ? "600" : "604800";
-            ////除了默认wwwroot的额外的一个静态目录
-            //app.UseStaticFiles(new StaticFileOptions
-            //{
-            //    FileProvider = new PhysicalFileProvider(
-            //        Path.Combine(Directory.GetCurrentDirectory(), "MyStaticFiles")),
-            //    RequestPath = "/StaticFiles",
-            //    OnPrepareResponse = ctx =>
-            //    {
-            //        //设置响应缓存cache
-            //        ctx.Context.Response.Headers.Append("Cache-Control", $"public, max-age={cachePeriod}");
-            //    }
-            //});
-
             ////启用目录浏览
             //app.UseDirectoryBrowser(new DirectoryBrowserOptions
             //{
@@ -150,6 +143,19 @@ namespace WebApi1
 
             app.UseFileServer(env.IsDevelopment());//生产环境禁用目录浏览
 
+            var cachePeriod = env.IsDevelopment() ? "600" : "604800";
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "MyStaticFiles")),
+                RequestPath = "/StaticFiles",
+                OnPrepareResponse = ctx =>
+                {
+                    //设置响应缓存cache
+                    ctx.Context.Response.Headers.Append("Cache-Control", $"public, max-age={cachePeriod}");
+                }
+            });
+
             app.UseErrorHandling();
 
             app.UseAuthentication();
@@ -165,7 +171,7 @@ namespace WebApi1
                     );
             });
 
-            app.UseWelcomePage();
+            //app.UseWelcomePage();
         }
 
         /// <summary>
@@ -193,5 +199,4 @@ namespace WebApi1
                 .InstancePerLifetimeScope();
         }
     }
-
 }

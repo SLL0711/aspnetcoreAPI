@@ -1,0 +1,1 @@
+ dotnet ef dbcontext scaffold "Server=10.1.1.7;Database=PetShop;User ID=sa;Password=123456;" Microsoft.EntityFrameworkCore.SqlServer -c PetshopContext --context-dir ./DbContexts -o ./DbModels -f

@@ -21,8 +21,7 @@ namespace Service.Services.StudentServices
 
         public async Task SetEmailForStudents(int id)
         {
-            var student = await _studentRepository.RetrieveAll();
-            var studentObj = await student.Where(t => t.Id == id).FirstOrDefaultAsync();
+            var studentObj = await _studentRepository.RetrieveAll().FirstOrDefaultAsync(t=>t.Id == id);
 
             if (studentObj != null)
             {

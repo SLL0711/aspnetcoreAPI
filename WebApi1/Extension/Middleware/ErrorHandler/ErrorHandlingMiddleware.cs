@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Service.Models.CommonModel;
 using WebApi1.Extension.ExtensionModel;
 
 namespace WebApi1.Extension.Middleware.ErrorHandler

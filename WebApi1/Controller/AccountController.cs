@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Service.Models.CommonModel;
 using WebApi1.Extension.ExtensionModel;
 using WebApi1.Extension.ExtensionModel.ConfigOptions;
 using WebApi1.Model;

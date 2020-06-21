@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using Service.Models.CommonModel;
 using Service.Services.StudentServices;
 using WebApi1.Extension.ExtensionModel;
 

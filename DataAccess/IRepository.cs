@@ -10,8 +10,9 @@ namespace DataAccess
     {
         Task Add(T t);
         Task<T> RetrieveById(Guid id);
-        Task<IQueryable<T>> RetrieveAll();
+        IQueryable<T> RetrieveAll();
         Task Delete(T t);
+        Task DeleteById(Guid id);
         Task Update(T t);
     }
 }
