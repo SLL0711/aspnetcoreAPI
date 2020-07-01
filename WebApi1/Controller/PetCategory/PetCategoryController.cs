@@ -12,7 +12,7 @@ using WebApi1.Extension.ExtensionModel;
 
 namespace WebApi1.Controller.PetCategory
 {
-    public class PetCategoryController : ControllerBase
+    public class PetCategoryController : ApiBaseController
     {
         private mJsonResult json;
         private readonly PetCategoryManageService categoryManageService;

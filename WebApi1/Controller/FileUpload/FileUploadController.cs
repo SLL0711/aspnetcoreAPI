@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DB.DbModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.Models.CommonModel;
@@ -11,7 +12,8 @@ using WebApi1.Extension.ExtensionModel;
 
 namespace WebApi1.Controller.FileUpload
 {
-    public class FileUploadController : ControllerBase
+    [AllowAnonymous]
+    public class FileUploadController : ApiBaseController
     {
         private readonly mJsonResult json;
         private readonly FileManageService fileManageService;

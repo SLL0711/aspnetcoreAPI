@@ -26,6 +26,8 @@ namespace WebApi1.Controller
         private ILogger _logger;
         private MyOptions options;
         private MyOptions options2;
+        private const string USERNAME = "admin";
+        private const string PASSWORD = "admin";
 
         public AccountController(mJsonResult jsonResult, ILogger<AccountController> logger,
             IOptions<MyOptions> configOptions, IOptionsSnapshot<MyOptions> snapshot)
@@ -38,8 +40,11 @@ namespace WebApi1.Controller
 
         //[Route("GetToken")]
         [HttpGet]
-        public void GetToken(string userName, string email, string passWord)
+        [AllowAnonymous]
+        public void Login(string userName, string passWord)
         {
+            #region 废弃代码
+
             //IOptions<MyOptions> a = null;
             //IOptionsMonitor<MyOptions> b = null;
             //IOptionsFactory<MyOptions> c = null;
@@ -53,16 +58,16 @@ namespace WebApi1.Controller
             //var a = Request.HttpContext.RequestServices.GetRequiredService(typeof(ITest));
             //((ITest)a).cw();
 
-            if (userName != "sll" || passWord != "123456" || string.IsNullOrWhiteSpace(email))
+            #endregion
+
+            if (userName != USERNAME || passWord != PASSWORD)
             {
                 json.Success = false;
                 json.Msg = "用户认证未通过！";
                 return;
             }
 
-            //throw new ArgumentNullException("userName");
-
-            var token = generateToken(userName, email);
+            var token = generateToken(userName);
 
             json.Obj = new
             {
@@ -72,12 +77,13 @@ namespace WebApi1.Controller
             _logger.LogInformation($"Token:{token}");
         }
 
+        #region 测试代码
+
         /// <summary>
         /// 模拟控制器方法需要授权之后访问
         /// </summary>
         /// <returns></returns>
         //[Route("GetServerTime")]
-        [Authorize]
         [HttpPost]
         public void GetServerTime()
         {
@@ -89,7 +95,6 @@ namespace WebApi1.Controller
             };
         }
 
-        [Authorize]
         [HttpPost]
         public void PostMethodWithJson([FromBody]TestModel testModel)
         {
@@ -99,7 +104,6 @@ namespace WebApi1.Controller
             };
         }
 
-        [Authorize]
         [HttpPost]
         public void PostMethodWithUrlcode(ChildModel childModel)
         {
@@ -109,5 +113,7 @@ namespace WebApi1.Controller
                 age = childModel.age
             };
         }
+
+        #endregion
     }
 }
