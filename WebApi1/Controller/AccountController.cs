@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Lib.Database;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -112,6 +113,25 @@ namespace WebApi1.Controller
                 name = childModel.name,
                 age = childModel.age
             };
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public void LogInfo()
+        {
+            Lib.Log.LogHelper.Info("1111");
+            Lib.Log.LogHelper.Debug("1111");
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public void SqlSelect()
+        {
+            using (SqlHelper sqlHelper = new SqlHelper("Server=10.1.1.7;database=School;User ID=sa;Password=123456;"))
+            {
+                string sql = "SELECT * FROM STUDENTS";
+                json.Rows = sqlHelper.GetDataTable(sql);
+            }
         }
 
         #endregion

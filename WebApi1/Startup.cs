@@ -105,6 +105,8 @@ namespace WebApi1
         public void Configure(IApplicationBuilder app, IHostingEnvironment env,
             ILoggerFactory loggerFactory, ILoggerProvider loggerProvider)
         {
+            Console.WriteLine(Environment.CurrentDirectory);
+
             #region
 
             //Console.WriteLine(config.GetConnectionString("DefaultConnection"));
