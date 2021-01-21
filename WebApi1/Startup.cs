@@ -145,11 +145,16 @@ namespace WebApi1
 
             app.UseFileServer(env.IsDevelopment());//生产环境禁用目录浏览
 
+            var p = Path.Combine(Directory.GetCurrentDirectory(), "MyStaticFiles");
+            if (!Directory.Exists(p))
+            {
+                Directory.CreateDirectory(p);
+            }
+
             var cachePeriod = env.IsDevelopment() ? "600" : "604800";
             app.UseStaticFiles(new StaticFileOptions
             {
-                FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Directory.GetCurrentDirectory(), "MyStaticFiles")),
+                FileProvider = new PhysicalFileProvider(p),
                 RequestPath = "/StaticFiles",
                 OnPrepareResponse = ctx =>
                 {
@@ -161,6 +166,7 @@ namespace WebApi1
             app.UseErrorHandling();
 
             app.UseAuthentication();
+
 
             //app.UseMvcWithDefaultRoute();
 
